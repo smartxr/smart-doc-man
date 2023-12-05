@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='chat.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Chat Web-site</title>
+</head>
+<body>
+    <div class="header">
+        <h1>Smart Document Management System</h1>
+    </div>
+    
+    <dev class="main">
+        <div class="left-panel">
+            <div>
+                <ul>
+                    <li>Search</li>
+                    <li>LLM Analysis</li>
+                    <li>History</li>
+                    <li>Configuration</li>
+                </ul>
+            </div>
+        </div>
+        <div class="content-area">
+            <div class="chat-title">1</div>
+            <div class="chat-thread">
+                <div style="overflow: visible;">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Commodo viverra maecenas accumsan lacus vel facilisis. Quam vulputate dignissim suspendisse in est ante in nibh. Sapien eget mi proin sed libero. Nec feugiat in fermentum posuere. Sed turpis tincidunt id aliquet risus feugiat in. Augue neque gravida in fermentum et. Aenean euismod elementum nisi quis eleifend. Ut aliquam purus sit amet luctus venenatis lectus. Pharetra pharetra massa massa ultricies mi quis. Ipsum nunc aliquet bibendum enim facilisis gravida neque convallis a.
+                </div>
+            </div>
+            <div class="chat-prompt">
+                <div style="width: 50px; display: flex; align-items: flex-end;">
+                    <button disabled type="button" onclick="clearChat()">Clear<br>Chat</button>
+                </div>
+                <div style="flex: 1; border: 2px solid black;">
+                    <textarea id="prompt-textarea" placeholder="Message ChatGPT"></textarea>
+                </div>
+                <div style="width: 50px; display: flex;">
+                    <div style="display: flex; align-items: flex-end;">
+                        <button type="button" onclick="sendMessage()">Send</button>
+                    </div>
+                </div>
+            </div> 
+        </div>
+        <div class="right-panel">
+            <div class="aside">
+              <h2>Step 1</h2>
+              <p>Select operation on the left.</p>
+              <h2>Step 2</h2>
+              <p>Provide your request.</p>
+              <h2>Step 3</h2>
+              <p>Behold the results.</p>
+            </div>
+        </div>
+    </dev>
+
+    <div class="footer">
+        <div>Eugene Froimson (c) - eugene@froim.zone - 2023</div>
+    </div>
+</body>
+</html>
+
+
