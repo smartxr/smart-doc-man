@@ -28,7 +28,22 @@
             </div>
         </div>
         <div class="content-area">
-            <div class="chat-title">1</div>
+            <div class="chat-title">
+                <label for="resourceSelector">Search Resource:</label>
+                <select name="resourceSelector" id="resourceSelector">
+                    <!-- {% for key in search_resources %}
+                        <option value={{key}}>{{search_resources[key]}}</option>
+                    {% endfor %} -->
+                    <option value="Resource A">Resource A</option>
+                    <option value="Resource B" selected>Resource B</option>
+                </select>
+                <br>
+                <label for="indexSelector">Index:</label>
+                <select name="indexSelector" id="indexSelector">
+                    <option value="Resource A">Resource A</option>
+                    <option value="Resource B" selected>Resource B</option>    
+                </select>
+            </div>
             <div class="chat-thread">
                 <div class="chat-flow">
                     <div>
@@ -66,25 +81,29 @@
             <div style="height: 10px;">
                 <!-- Spacer -->
             </div>
-            <div class="chat-prompt">
-                <div style="width: 50px; display: flex; align-items: flex-end;">
+            <div class="chatprompt-area">
+                <div class="clear-container">
+                    <button type="button" id="clearchat-button" aria-label="clear chat button" onclick="clearChat()">
+                        Broom
+                    </button>
                     <div>
-                        <button type="button" class="clearchat-button" onclick="clearChat()">
-                            Clear
-                        </button>
                     </div>
                 </div>
-                <div style="flex: 1; border: 0px solid black;">
-                    <textarea id="prompt-textarea" placeholder="Message ChatGPT"></textarea>
+                <div style="width: 3px;"><!-- Spacer --></div>
+                <div class="prompt-container">
+                    <textarea contenteditable role="textbox" id="prompt-textarea" placeholder="Message ChatGPT"></textarea>
+                    <!-- <div style="height: 100%;">
+                    </div> -->
                 </div>
-                <div style="width: 50px; display: flex;">
-                    <div style="display: flex; align-items: flex-end;">
-                        <button type="button" id="send-button" onclick="sendMessage()">
-                            <img src="{{ url_for('static', filename='Send.svg') }}" alt="Send" />
-                        </button>
-                    </div>
+                <div class="send-container">
+                    <button type="button" id="send-button" onclick="sendMessage()">
+                        <img src="{{ url_for('static', filename='Send.svg') }}" alt="Send" />
+                    </button>
+                    <!-- <div style="display: flex; align-items: flex-end;">
+                    </div> -->
                 </div>
-            </div> 
+            </div>
+            <div style="height: 10px;"><!-- Spacer --></div>
         </div>
         <div class="right-panel">
             <div class="aside">
