@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="{{ url_for('static', filename='chat.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
   <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
   <link rel="icon" href="{{ url_for('static', filename='favicon-16x16.png') }}" type="image/png" sizes="16x16">
   <link rel="icon" href="{{ url_for('static', filename='favicon-32x32.png') }}" type="image/png" sizes="32x32">
@@ -92,15 +92,11 @@
                 <div style="width: 3px;"><!-- Spacer --></div>
                 <div class="prompt-container">
                     <textarea contenteditable role="textbox" id="prompt-textarea" placeholder="Message ChatGPT"></textarea>
-                    <!-- <div style="height: 100%;">
-                    </div> -->
                 </div>
                 <div class="send-container">
                     <button type="button" id="send-button" onclick="sendMessage()">
                         <img src="{{ url_for('static', filename='Send.svg') }}" alt="Send" />
                     </button>
-                    <!-- <div style="display: flex; align-items: flex-end;">
-                    </div> -->
                 </div>
             </div>
             <div style="height: 10px;"><!-- Spacer --></div>
