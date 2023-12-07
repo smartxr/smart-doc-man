@@ -37,6 +37,24 @@ body {
     border: 0px solid black;
 }
 
+select {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 300px;
+}
+
+#chatseed-textarea {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 500px;
+}
+
 .left-panel {
     border: 0px solid black;
     /* width: 20%; */
@@ -140,6 +158,13 @@ body {
     margin: 3px;
 }
 
+#chatseed-textarea {
+    width: 90%;
+    min-height: 34px;
+    resize: vertical;
+    overflow-y: auto;
+}
+
 .chat-thread {
     flex-grow: 1;
     border: 0px solid black;
@@ -192,6 +217,16 @@ body {
     border-radius: 1rem;
     padding: 5px 0px 5px 16px;
     resize: none;
+}
+
+.message-timestamp {
+    font-style: italic;
+    font-size: 10px;
+}
+.message-party {
+    font-weight: bold;
+    /* font-size: 14px; */
+    /* font-size: smaller; */
 }
 
 @media only screen and (min-width: 600px) {
