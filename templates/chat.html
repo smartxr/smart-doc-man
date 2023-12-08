@@ -11,6 +11,7 @@
   <title>Chat Web-site</title>
 </head>
 <body>
+    <div id="PDloader"></div>
     <div class="header">
         <h1>Smart Document Management System</h1>
     </div>
@@ -67,7 +68,26 @@
                             
                         // Trigger change event to populate the second selector with default selection
                         $('#resourceSelector').trigger('change');
+
+                        // Hide spinner
+                        // $('#PDloader, .PDloading').css('display' , 'none');
+
+                        // Event listener for Ctrl+Enter
+                        // document.getElementById("prompt-textarea").addEventListener("keydown", function(event) {
+                        //     // if (event.ctrlKey && event.key === "Enter") {
+                        //     if (event.ctrlKey && event.keyCode === 13) {
+                        //         sendMessage();
+                        //     }
+                        // });
+
+
                     });
+
+                    //once the form has loaded and initial lookups have run, this section will execute
+                    // $(document).on("onloadlookupfinished", function () {
+                    //     // the following line hides the spinner. 
+                    //     $('#PDloader, .PDloading').css('display' , 'none');
+                    // });
                 </script>
 
                 <br>
@@ -148,11 +168,14 @@
     </div>
     <script>
         let conversationHistory = [];
-        var seedMessage = document.getElementById("chatseed-textarea").value;
-        if (seedMessage.trim() !== "")
-            conversationHistory.push({ role: 'system', content: seedMessage });
-
+        
         function sendMessage() {
+            // Get seed message
+            var seedMessage = document.getElementById("chatseed-textarea").value;
+            if ((seedMessage.trim() !== "") && (conversationHistory.length === 0))
+                conversationHistory.push({ role: 'system', content: seedMessage });
+
+            // Get user message
             var userMessage = document.getElementById("prompt-textarea").value;
             if (userMessage.trim() === "") return;
 
@@ -164,9 +187,10 @@
             document.getElementById("send-button").disabled = true;
 
             // Show spinner
-            var spinner = document.createElement("div");
-            spinner.className = "spinner";
-            document.body.appendChild(spinner);
+            $('#PDloader, .PDloading').css('display' , 'block');
+            // var spinner = document.createElement("div");
+            // spinner.className = "spinner";
+            // document.body.appendChild(spinner);
 
 
             // Send user message to server
@@ -213,23 +237,27 @@
                     
                     // Update chat history with server response
                     for (let chat_msg of data.messages) {
+
+                        // Building citations section
                         let citations_html = "";
                         for (let citation of chat_msg.context.citations) {
-                            citations_html += `<span><b>${citation.ref_no}</b>: ${citation.filepath}</span><br>
+                            citations_html += `<span><b>${citation.ref_no}</b>: ${citation.filepath} - (${citation.chunk_id})</span><br>
                             <span class="citation-url">${citation.url}</span><br>`
                         }
                         
+                        // Building intents section
                         let intents_html = "";
                         for (let intent of chat_msg.context.intents) {
                             intents_html += `<span>${intent}</span><br>`
                         }
 
+                        // Bulding completed chat message
                         chatFlow.innerHTML += `
                             <div>
                                 <p>
                                     <span class="message-timestamp">${chat_msg.timestamp}</span><br>
                                     <span class="message-party">${chat_msg.role}:</span>
-                                    <span>${chat_msg.message}</span><br>
+                                    <span>${chat_msg.content}</span><br>
                                 </p>
                                 <p>
                                     <span><i>Additional context provided by</i> <b>${chat_msg.context.role}</b></span><br>
@@ -257,7 +285,8 @@
 
                     // Enable send button and remove spinner
                     document.getElementById("send-button").disabled = false;
-                    document.body.removeChild(spinner);
+                    // document.body.removeChild(spinner);
+                    $('#PDloader, .PDloading').css('display' , 'none');
 
                     // Clear user input
                     document.getElementById("prompt-textarea").value = "";
@@ -273,9 +302,9 @@
         function clearChat() {
             document.getElementById("chat-flow").innerHTML = "";
             conversationHistory = [];
-            var seedMessage = document.getElementById("chatseed-textarea").value;
-            if (seedMessage.trim() !== "")
-                conversationHistory.push({ role: 'system', content: seedMessage });
+            // var seedMessage = document.getElementById("chatseed-textarea").value;
+            // if (seedMessage.trim() !== "")
+            //     conversationHistory.push({ role: 'system', content: seedMessage });
             // Clear chat history on the server
             // fetch('/clear_chat', {
             //     method: 'POST',

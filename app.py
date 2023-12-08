@@ -56,7 +56,7 @@ def send_message():
     # api_response = requests.post(api_endpoint, json={'chat_history': chat_history})
 
     data = request.get_json()
-    # print(data) # TODO: Remove this Debug comment
+    print(data) # TODO: Remove this Debug comment
     user_message = data.get('user_message', '')
     search_resource = data.get('search_resource', 'none')
     search_index_name = data.get('search_index', 'none')
@@ -106,7 +106,7 @@ def send_message():
         extra_body=extra_body_value,
     )
 
-    print(completion.model_dump_json(indent=2)) # TODO: Remove this Debug comment
+    # print(completion.model_dump_json(indent=2)) # TODO: Remove this Debug comment
     # TODO: Find other JSON dump's and convert them into model
 
     # Deserialize citation information from Tool message
@@ -137,11 +137,11 @@ def send_message():
 
         # Package all accumulated components in a message
         messages.append({
-            'index': choice.index,
+            'index': choice.index, # TODO: Consider removing from chat history
             'timestamp': timestamp,
-            'message': choice.message.content,
+            'content': choice.message.content,
             'role': choice.message.role,
-            'end_turn': choice.message.end_turn,
+            'end_turn': choice.message.end_turn, # TODO: Consider removing from chat history
             'context': {
                 'role': cm_role,
                 'citations': citations,
