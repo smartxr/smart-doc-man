@@ -51,7 +51,7 @@ select {
     padding-bottom: 5px;
     font-size: 14px;
     margin-top: 10px;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
     width: 500px;
 }
 
@@ -185,6 +185,7 @@ select {
     padding: 10px;
     box-shadow: 0 2px 4px #00000024, 0 0 2px #0000001f;
     border-radius: 8px;
+    overflow-wrap: anywhere;
 }
 
 .user-message {
@@ -227,6 +228,12 @@ select {
     font-weight: bold;
     /* font-size: 14px; */
     /* font-size: smaller; */
+}
+
+.citation-url {
+    font-size: 10px;
+    font-style: italic;
+    text-decoration: underline;
 }
 
 @media only screen and (min-width: 600px) {

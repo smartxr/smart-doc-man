@@ -56,11 +56,12 @@ def send_message():
     # api_response = requests.post(api_endpoint, json={'chat_history': chat_history})
 
     data = request.get_json()
-    print(data)
+    # print(data) # TODO: Remove this Debug comment
     user_message = data.get('user_message', '')
-    chat_history = data.get('chat_history', [])
     search_resource = data.get('search_resource', 'none')
     search_index_name = data.get('search_index', 'none')
+    chat_seed = data.get('chat_seed', '')
+    chat_history = data.get('chat_history', [])
 
     if user_message == '':
         return jsonify({'status': 'error', 'message': 'Empty message'})
@@ -91,7 +92,8 @@ def send_message():
                         "queryType": "semantic",
                         "semanticConfiguration": "default",
                         "topNDocuments": 10, #Retrieved documents. Default - 5, maximum - 20
-                        "roleInformation": 'You are an AI assistant that helps people find information.',
+                        "roleInformation": chat_seed,
+                        # "roleInformation": 'You are an AI assistant that helps people find information.',
                         "strictness": 1, # default - 3, highest - 5, lowest - 1
                     }
                 }
@@ -104,18 +106,63 @@ def send_message():
         extra_body=extra_body_value,
     )
 
-    print(completion.model_dump_json(indent=2))
+    print(completion.model_dump_json(indent=2)) # TODO: Remove this Debug comment
+    # TODO: Find other JSON dump's and convert them into model
+
+    # Deserialize citation information from Tool message
+    # TODO: What is "end_turn": true in the message
+    messages = []
+    for choice in completion.choices:
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        for context_message in choice.message.context['messages']:
+            cm_role = context_message['role']
+            cm_content = json.loads(context_message['content'])
+            citations = []
+            ref_no = 1
+            for citation in cm_content['citations']:
+                citations.append({
+                    'ref_no': ref_no,
+                    'id': citation['id'],
+                    'title': citation['title'],
+                    'filepath': citation['filepath'],
+                    'url': citation['url'],
+                    'chunk_id': citation['chunk_id'],
+                    # 'content': citation['content'],
+                })
+                ref_no += 1
+            
+            intents = []
+            for intent in json.loads(cm_content['intent']):
+                intents.append(intent)
+
+        # Package all accumulated components in a message
+        messages.append({
+            'index': choice.index,
+            'timestamp': timestamp,
+            'message': choice.message.content,
+            'role': choice.message.role,
+            'end_turn': choice.message.end_turn,
+            'context': {
+                'role': cm_role,
+                'citations': citations,
+                'intents': intents,
+            }
+        })
+
 
     # Add API response to chat history
-    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    api_response_message = {'timestamp': timestamp, 'role': completion.choices[0].message.role, 'content': completion.choices[0].message.content}
+    # api_response_messages = [{'timestamp': timestamp, 'role': completion.choices[0].message.role, 'content': completion.choices[0].message.content}]
+    # TODO: Accomodate multiple choices and Tool messages
 
-    chat_history.append(api_response_message)
+    # chat_history.append(api_response_message) # TODO: This is where to capture all Tool messages
+    chat_history.extend(messages) # TODO: This is where to capture all Tool messages
 
 
     # chat_history.append(api_response_message)
 
-    return jsonify({'status': 'success', 'message': api_response_message, 'chathistory': chat_history})
+    # Input should be 'system', 'user', 'assistant', 'tool' or 'function'"
+
+    return jsonify({'status': 'success', 'messages': messages, 'chathistory': chat_history})
     # return jsonify({'status': 'success', 'message': api_response_message, 'chathistory': chat_history})
 
 @app.route('/clear_chat', methods=['POST'])

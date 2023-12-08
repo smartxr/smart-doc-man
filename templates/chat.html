@@ -160,6 +160,15 @@
             // conversationHistory += userMessage;
             conversationHistory.push({ role: 'user', content: userMessage });
 
+            // Disable send button
+            document.getElementById("send-button").disabled = true;
+
+            // Show spinner
+            var spinner = document.createElement("div");
+            spinner.className = "spinner";
+            document.body.appendChild(spinner);
+
+
             // Send user message to server
             fetch('/send_message', {
                 method: 'POST',
@@ -173,7 +182,8 @@
                 body: JSON.stringify({
                     user_message: userMessage,
                     search_resource: document.getElementById("resourceSelector").value,
-                    search_index: document.getElementById("indexSelector").value, 
+                    search_index: document.getElementById("indexSelector").value,
+                    chat_seed: seedMessage,
                     chat_history: conversationHistory
                 }),
             })            
@@ -188,26 +198,76 @@
                             ${userMessage}
                         </div>`;
 
+                    //data.messages
+
                     // Update chat history with server response
-                    chatFlow.innerHTML += `
-                        <div>
-                            <span class="message-timestamp">${data.message.timestamp}</span><br>
-                            <span class="message-party">${data.message.role}:</span>
-                            <span>${data.message.content}</span>
-                        </div>`;
+                    // for (let message in data.messages) {
+                    //     chatFlow.innerHTML += `
+                    //         <div>
+                    //             <span class="message-timestamp">${message.timestamp}</span><br>
+                    //             <span class="message-party">${message.role}:</span>
+                    //             <span>${message.content}</span><br>
+                    //             <span>${message}</span>
+                    //         </div>`;
+                    // }
+                    
+                    // Update chat history with server response
+                    for (let chat_msg of data.messages) {
+                        let citations_html = "";
+                        for (let citation of chat_msg.context.citations) {
+                            citations_html += `<span><b>${citation.ref_no}</b>: ${citation.filepath}</span><br>
+                            <span class="citation-url">${citation.url}</span><br>`
+                        }
+                        
+                        let intents_html = "";
+                        for (let intent of chat_msg.context.intents) {
+                            intents_html += `<span>${intent}</span><br>`
+                        }
+
+                        chatFlow.innerHTML += `
+                            <div>
+                                <p>
+                                    <span class="message-timestamp">${chat_msg.timestamp}</span><br>
+                                    <span class="message-party">${chat_msg.role}:</span>
+                                    <span>${chat_msg.message}</span><br>
+                                </p>
+                                <p>
+                                    <span><i>Additional context provided by</i> <b>${chat_msg.context.role}</b></span><br>
+                                </p>
+                                <p>
+                                    <span><i>Citations</i>:</span><br>${citations_html}<br>
+                                </p>
+                                <p>
+                                    <span><i>Intents</i>:</span><br>${intents_html}<br>
+                                </p>
+                            </div>`;
+                    }
+
+                    
+                    // chatFlow.innerHTML += `
+                    //     <div>
+                    //         <span>${data.messages}</span>
+                    //     </div>`;
 
                     conversationHistory = data.chathistory
 
                     // Push scrolling to the bottom of chat-flow
                     var chatThread = document.getElementById("chat-thread");
                     chatThread.scrollTop = chatThread.scrollHeight;
+
+                    // Enable send button and remove spinner
+                    document.getElementById("send-button").disabled = false;
+                    document.body.removeChild(spinner);
+
+                    // Clear user input
+                    document.getElementById("prompt-textarea").value = "";
                 } else {
                     console.error('Error in sending message:', data.message);
                 }
             });
 
             // Clear user input
-            document.getElementById("prompt-textarea").value = "";
+            // document.getElementById("prompt-textarea").value = "";
         }
 
         function clearChat() {
