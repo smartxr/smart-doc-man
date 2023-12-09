@@ -63,7 +63,8 @@
                             // Automatically set default selection to the first option
                             // indexSelector.val(options[0]);
                             // indexSelector.find('option:first').prop('selected', true);
-                            indexSelector.find('option:eq(1)').prop('selected', true);
+                            // TODO: ERROR: jQuery.Deferred exception: indexSelector.find
+                            // indexSelector.find('option:eq(1)').prop('selected', true);
                         });
                             
                         // Trigger change event to populate the second selector with default selection
@@ -240,15 +241,26 @@
 
                         // Building citations section
                         let citations_html = "";
-                        for (let citation of chat_msg.context.citations) {
-                            citations_html += `<span><b>${citation.ref_no}</b>: ${citation.filepath} - (${citation.chunk_id})</span><br>
-                            <span class="citation-url">${citation.url}</span><br>`
+
+                        if (chat_msg.context.citations !== undefined && Array.isArray(chat_msg.context.citations) && chat_msg.context.citations.length > 0) {
+                            for (let citation of chat_msg.context.citations) {
+                                citations_html += `<span><b>${citation.ref_no}</b>: ${citation.filepath} - (${citation.chunk_id})</span><br>
+                                <span class="citation-url">${citation.url}</span><br>`
+                            }
+                        }
+                        else {
+                            citations_html += `<span><i>No citations provided</i></span><br>`
                         }
                         
                         // Building intents section
                         let intents_html = "";
-                        for (let intent of chat_msg.context.intents) {
-                            intents_html += `<span>${intent}</span><br>`
+                        if (chat_msg.context.intents !== undefined && Array.isArray(chat_msg.context.intents) && chat_msg.context.intents.length > 0) {
+                            for (let intent of chat_msg.context.intents) {
+                                intents_html += `<span>${intent}</span><br>`
+                            }
+                        }
+                        else {
+                            intents_html += `<span><i>No intentions provided</i></span><br>`
                         }
 
                         // Bulding completed chat message
