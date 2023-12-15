@@ -30,7 +30,7 @@ def get_index_options(resource):
     if resource == "none":
         return {"none": "-=None=-"}
     else:
-        return json.loads(os.environ.get(f"SEARCH_INDEX_CONFIG_{resource.upper()}"))
+        return json.loads(os.environ.get(f"SEARCH_INDEX_CONFIG_{resource.replace('-', '_').upper()}"))
 
 
 @app.route("/get_options/<resource>")
