@@ -20,15 +20,27 @@
         <div class="left-panel">
             <div>
                 <ul>
-                    <li>Search</li>
-                    <li style="background-color: lightgray;">LLM Analysis</li>
-                    <li>History</li>
-                    <li>Configuration</li>
-                    <li>Deploy Search</li>
+                    <li id="searchItem" onclick="tabClick(this.id)">Search</li>
+                    <li id="chatItem" onclick="tabClick(this.id)" style="background-color: lightgray;">LLM Analysis</li>
+                    <li id="historyItem" onclick="tabClick(this.id)">History</li>
+                    <li id="configItem" onclick="tabClick(this.id)">Configuration</li>
+                    <li id="deployItem" onclick="tabClick(this.id)">Deploy Search</li>
                 </ul>
             </div>
         </div>
-        <div class="content-area">
+        <div class="content-area" id="content-area-search" style="display: none;">
+            This is a test context (Search)
+        </div>
+        <div class="content-area" id="content-area-history" style="display: none;">
+            This is a test context (History)
+        </div>
+        <div class="content-area" id="content-area-config" style="display: none;">
+            This is a test context (Configuration)
+        </div>
+        <div class="content-area" id="content-area-deploy" style="display: none;">
+            This is a test context (Deploy)
+        </div>
+        <div class="content-area" id="content-area-chat">
             <div class="chat-title">
                 <label for="resourceSelector">Search Resource:</label>
                 <select name="resourceSelector" id="resourceSelector">
@@ -81,8 +93,37 @@
                         //     }
                         // });
 
+                        // Event listener for Ctrl+Enter
+                        document.getElementById("historyItem").addEventListener("click", function(event) {
+                            // if (event.ctrlKey && event.key === "Enter") {
+                            console.info('Hitory Clicked');
+                            // var chatThread = document.getElementById("chat-thread");
+                            // chatThread.disabled = true;
+                        });
 
+                        
+                        
                     });
+                    
+                    const blades = {
+                        searchItem: 'content-area-search',
+                        chatItem: 'content-area-chat',
+                        historyItem: 'content-area-history',
+                        configItem: 'content-area-config',
+                        deployItem: 'content-area-deploy'
+                    };
+
+                    function tabClick(caller_id) {
+                        for (const [key, value] of Object.entries(blades)) {
+                            // console.info('item: ', key, ' tab:', value);
+                            // console.error('Unknown tab clicked:', call_id);
+                            const threadElement = document.getElementById(value);
+                            threadElement.style.display = key === caller_id ? 'flex' : 'none';
+                            const menuElement = document.getElementById(key);
+                            menuElement.style.backgroundColor = key === caller_id ? 'lightgray' : '';
+                            menuElement.disabled = key === caller_id ? true : false;
+                        };
+                    }
 
                     //once the form has loaded and initial lookups have run, this section will execute
                     // $(document).on("onloadlookupfinished", function () {
