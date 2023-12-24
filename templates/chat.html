@@ -117,9 +117,10 @@
                     </div>
                     <div class="user-message">
                         Etiam erat velit scelerisque in dictum. Netus et malesuada fames ac turpis egestas integer eget. Vitae auctor eu augue ut lectus. Non diam phasellus vestibulum lorem sed risus ultricies tristique. Arcu risus quis varius quam quisque. Elit ut aliquam purus sit amet. Cursus euismod quis viverra nibh cras pulvinar mattis nunc sed. Lectus vestibulum mattis ullamcorper velit sed ullamcorper. Nunc congue nisi vitae suscipit tellus mauris a. Lorem dolor sed viverra ipsum nunc aliquet bibendum enim. Tincidunt augue interdum velit euismod in. Eleifend donec pretium vulputate sapien nec sagittis aliquam malesuada. Facilisis gravida neque convallis a. Vitae semper quis lectus nulla at. Vitae auctor eu augue ut. Amet massa vitae tortor condimentum lacinia.
-                    </div>
-                    <div>
-                        Phasellus faucibus scelerisque eleifend donec pretium vulputate sapien. Sit amet risus nullam eget felis eget nunc lobortis. Blandit turpis cursus in hac habitasse platea dictumst. Sed euismod nisi porta lorem mollis aliquam. Interdum velit laoreet id donec. Leo integer malesuada nunc vel risus commodo viverra maecenas accumsan. Enim facilisis gravida neque convallis a cras semper auctor. Purus sit amet volutpat consequat mauris nunc congue nisi. Orci eu lobortis elementum nibh tellus molestie nunc non. Scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus. Dolor purus non enim praesent. Lorem ipsum dolor sit amet. Pharetra convallis posuere morbi leo. Felis bibendum ut tristique et egestas quis ipsum. Enim sit amet venenatis urna. A diam sollicitudin tempor id eu nisl nunc. Tortor condimentum lacinia quis vel. Faucibus purus in massa tempor nec feugiat nisl. Id aliquet lectus proin nibh.
+                        <details>
+                            <summary>Click to see more</summary>
+                            Phasellus faucibus scelerisque eleifend donec pretium vulputate sapien. Sit amet risus nullam eget felis eget nunc lobortis. Blandit turpis cursus in hac habitasse platea dictumst. Sed euismod nisi porta lorem mollis aliquam. Interdum velit laoreet id donec. Leo integer malesuada nunc vel risus commodo viverra maecenas accumsan. Enim facilisis gravida neque convallis a cras semper auctor. Purus sit amet volutpat consequat mauris nunc congue nisi. Orci eu lobortis elementum nibh tellus molestie nunc non. Scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus. Dolor purus non enim praesent. Lorem ipsum dolor sit amet. Pharetra convallis posuere morbi leo. Felis bibendum ut tristique et egestas quis ipsum. Enim sit amet venenatis urna. A diam sollicitudin tempor id eu nisl nunc. Tortor condimentum lacinia quis vel. Faucibus purus in massa tempor nec feugiat nisl. Id aliquet lectus proin nibh.
+                        </details>
                     </div>
                     <div>
                         Sed adipiscing diam donec adipiscing tristique risus nec. Sit amet nisl suscipit adipiscing bibendum est. Platea dictumst quisque sagittis purus. Mi in nulla posuere sollicitudin aliquam ultrices sagittis. Morbi non arcu risus quis varius quam quisque id diam. Molestie a iaculis at erat pellentesque adipiscing commodo. Interdum velit euismod in pellentesque. Lacinia at quis risus sed vulputate. Vulputate mi sit amet mauris commodo quis. Ac feugiat sed lectus vestibulum mattis ullamcorper velit sed ullamcorper. Tortor consequat id porta nibh venenatis cras sed felis. Convallis convallis tellus id interdum velit laoreet id donec. Placerat orci nulla pellentesque dignissim enim. Morbi tristique senectus et netus. Turpis egestas sed tempus urna et pharetra pharetra massa. Faucibus in ornare quam viverra orci sagittis. Risus pretium quam vulputate dignissim suspendisse in. Ornare arcu odio ut sem. Ut pharetra sit amet aliquam.
@@ -271,15 +272,15 @@
                                     <span class="message-party">${chat_msg.role}:</span>
                                     <span>${chat_msg.content}</span><br>
                                 </p>
-                                <p>
-                                    <span><i>Additional context provided by</i> <b>${chat_msg.context.role}</b></span><br>
-                                </p>
-                                <p>
-                                    <span><i>Citations</i>:</span><br>${citations_html}<br>
-                                </p>
-                                <p>
-                                    <span><i>Intents</i>:</span><br>${intents_html}<br>
-                                </p>
+                                <details>
+                                    <summary><i>Expend additional context provided by</i> <b>${chat_msg.context.role}</b></summary>
+                                    <p>
+                                        <span><i>Citations</i>:</span><br>${citations_html}<br>
+                                    </p>
+                                    <p>
+                                        <span><i>Intents</i>:</span><br>${intents_html}<br>
+                                    </p>
+                                </details>
                             </div>`;
                     }
 
