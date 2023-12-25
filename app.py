@@ -16,13 +16,9 @@ def index():
     SEARCH_RESOURCES_LIST = json.loads(os.environ.get("SEARCH_RESOURCES_LIST"))
     SEARCH_RESOURCES_LIST["none"] = "-=None=-"
     return render_template(
-        "chat.html", chat_seed=chat_seed, search_resources=SEARCH_RESOURCES_LIST
+        "blocks.html", chat_seed=chat_seed, search_resources=SEARCH_RESOURCES_LIST
+        # "index.html", chat_seed=chat_seed, search_resources=SEARCH_RESOURCES_LIST
     )
-
-
-@app.route("/chat")
-def test():
-    return render_template("chat.html")
 
 
 # Configuration function to get options for index name selector
@@ -87,6 +83,34 @@ def send_message():
     return jsonify(
         {"status": "success", "messages": messages, "chathistory": chat_history}
     )
+
+
+@app.route("/run_search", methods=["POST"])
+def run_search():
+    # user_message = request.form['user_message']
+    # print(request.form['ref_id'])
+
+    # Get request body
+    data = request.get_json()
+    print(data)
+
+    sdm_chat.get_search_data(
+        search_resource=data["search_resource"], 
+        search_index=data["search_index"],
+         search_query=data["search_query"])
+
+    # Get data from the form
+    url = "https://{}.search.windows.net/indexes/{}/docs".format(
+        data["search_resource"], data["search_index"]
+    )
+    print(url)
+
+    # Add parameters to the URL
+    params = get_params(request.form["srcline"])
+
+    return jsonify(
+        {"status": "success", "messages": '', "chathistory": ''}
+    )    
 
 
 @app.route("/clear_chat", methods=["POST"])

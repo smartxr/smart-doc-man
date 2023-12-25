@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+  <link rel="icon" href="{{ url_for('static', filename='favicon-16x16.png') }}" type="image/png" sizes="16x16">
+  <link rel="icon" href="{{ url_for('static', filename='favicon-32x32.png') }}" type="image/png" sizes="32x32">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+  <script src="{{ url_for('static', filename='search.js') }}"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Chat Web-site</title>
+</head>
+<body>
+    <div id="PDloader"></div>
+    <div class="header">
+        {% block head %}{% endblock %}
+    </div>
+    
+    <dev class="main">
+        <div class="left-panel">
+            {% block left_panel %}{% endblock %}
+        </div>
+        <div class="content-area" id="content-area-search" style="display: none;">
+            {% include 'search.html' %}
+        </div>
+        <div class="content-area" id="content-area-chat">
+            {% include 'chat.html' %}
+        </div>
+        <div class="content-area" id="content-area-history" style="display: none;">
+            This is a test context (History)
+        </div>
+        <div class="content-area" id="content-area-config" style="display: none;">
+            This is a test context (Configuration)
+        </div>
+        <div class="content-area" id="content-area-deploy" style="display: none;">
+            This is a test context (Deploy)
+        </div>
+        <div class="right-panel">
+            {% block right_panel %}{% endblock %}
+        </div>
+    </dev>
+
+    <div class="footer">
+        {% block footer %}{% endblock %}
+    </div>
+</body>
+</html>
+
+

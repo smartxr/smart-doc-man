@@ -237,7 +237,24 @@ select {
 }
 
 
+#srchPhrase {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 500px;
+}
 
+#search-button {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 20%;
+    cursor: pointer;
+}
 
 
 .PDloading {
