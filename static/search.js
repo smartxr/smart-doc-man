@@ -116,11 +116,14 @@ function runSearch() {
             // document.getElementById("send-button").disabled = false;
             // document.body.removeChild(spinner);
             $('#PDloader, .PDloading').css('display' , 'none');
-
+            
             // Clear user input
             // document.getElementById("prompt-textarea").value = "";
         } else {
             console.error('Error in sending message:', data.message);
+            $('#PDloader, .PDloading').css('display' , 'none');
+            
+            alert('Error: ' + data.message);
         }
     });
 

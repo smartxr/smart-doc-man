@@ -120,7 +120,8 @@ def run_search():
     )
 
     if response.status_code != 200:
-        return jsonify({"status": "error", "message": "Error in Search API response"})
+        return jsonify({"status": "error", "message": response.text})
+        # return jsonify({"status": "error", "message": "Error in Search API response"})
     
     payload = response.json()
 
