@@ -1,6 +1,6 @@
 <div class="chat-title">
     <label for="resourceSelector_srch">Search Resource:</label>
-    <select name="resourceSelector_srch" id="resourceSelector_srch">
+    <select name="resourceSelector_srch" id="resourceSelector_srch" onchange="srchResourceChange(this)">
         {% for key in search_resources %}
             <option value={{key}}>{{search_resources[key]}}</option>
         {% endfor %}
@@ -12,7 +12,8 @@
     <label for="srcline">Search phrase:</label>
     <input type="text" name="srchPhrase" id="srchPhrase">
     <br>
-    <input type="button" value="Send Request" id="search-button" onclick="runSearch()">
+    <input type="button" value="Search" id="search-button" onclick="runSearch()">
+    <label for="search-button">Count: <span id="search_count_label">0</span></label>
 </div>
 <div class="chat-thread" id="search-thread">
     <div class="chat-flow" id="search-flow">

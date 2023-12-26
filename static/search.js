@@ -29,13 +29,18 @@ function runSearch() {
     .then(response => response.json())
     .then(data => {
         if (data.status === 'success') {
+            var srchCountLabel = document.getElementById("search_count_label");
+            srchCountLabel.innerHTML = data.result["count"];
+
+
             var searchFlow = document.getElementById("search-flow");
             
             // Update chat history with user message
-            searchFlow.innerHTML += `
-                <div class="user-message">
-                    ${userMessage}
-                </div>`;
+            searchFlow.innerHTML = ``;
+            // searchFlow.innerHTML = `
+            //     <div class="user-message">
+            //         ${data.result["count"]}
+            //     </div>`;
 
             //data.messages
 
@@ -51,49 +56,47 @@ function runSearch() {
             // }
             
             // Update chat history with server response
-            for (let chat_msg of data.messages) {
+            for (let value of data.result["values"]) {
 
-                // Building citations section
-                let citations_html = "";
-
-                if (chat_msg.context.citations !== undefined && Array.isArray(chat_msg.context.citations) && chat_msg.context.citations.length > 0) {
-                    for (let citation of chat_msg.context.citations) {
-                        citations_html += `<span><b>${citation.ref_no}</b>: ${citation.filepath} - (${citation.chunk_id})</span><br>
-                        <span class="citation-url">${citation.url}</span><br>`
+                // Building Highlights section
+                let highlights_html = "";
+                if (value.highlights !== undefined && Array.isArray(value.highlights) && value.highlights.length > 0) {
+                    for (let highlight of value.highlights) {
+                        highlights_html += `<p class="highlight">${ highlight }</p>`
                     }
                 }
                 else {
-                    citations_html += `<span><i>No citations provided</i></span><br>`
+                    highlights_html = `<span><i>No highlights provided</i></span>`
                 }
                 
-                // Building intents section
-                let intents_html = "";
-                if (chat_msg.context.intents !== undefined && Array.isArray(chat_msg.context.intents) && chat_msg.context.intents.length > 0) {
-                    for (let intent of chat_msg.context.intents) {
-                        intents_html += `<span>${intent}</span><br>`
+                // Building Captions section
+                let captions_html = "";
+                if (value.captions !== undefined && Array.isArray(value.captions) && value.captions.length > 0) {
+                    for (let caption of value.captions) {
+                        captions_html += ` <p class="highlight">${ caption }</p>`
                     }
                 }
                 else {
-                    intents_html += `<span><i>No intentions provided</i></span><br>`
+                    captions_html = `<span><i>No captions provided</i></span>`
                 }
 
                 // Bulding completed chat message
-                chatFlow.innerHTML += `
-                    <div>
-                        <p>
-                            <span class="message-timestamp">${chat_msg.timestamp}</span><br>
-                            <span class="message-party">${chat_msg.role}:</span>
-                            <span>${chat_msg.content}</span><br>
-                        </p>
-                        <details>
-                            <summary><i>Expend additional context provided by</i> <b>${chat_msg.context.role}</b></summary>
+                //<div style="max-width: 98%;">
+                //<div class="extended-frame">
+                searchFlow.innerHTML += `
+                    <div style="max-width: 98%;">
+                        <div>
                             <p>
-                                <span><i>Citations</i>:</span><br>${citations_html}<br>
+                                <span class="searchtitle">${ value.filename }</span><br>
+                                <span class="searchurl">${ value.url }:</span>
                             </p>
-                            <p>
-                                <span><i>Intents</i>:</span><br>${intents_html}<br>
-                            </p>
-                        </details>
+                        </div>
+                        <div class="searchresults">
+                            <p><b>Highlights:</b></p>
+                            ${ highlights_html }
+                            <p><b>Captions:</b></p>
+                            ${ captions_html }
+                        </div>
                     </div>`;
             }
 
@@ -103,19 +106,19 @@ function runSearch() {
             //         <span>${data.messages}</span>
             //     </div>`;
 
-            conversationHistory = data.chathistory
+            // conversationHistory = data.chathistory
 
             // Push scrolling to the bottom of chat-flow
-            var chatThread = document.getElementById("chat-thread");
-            chatThread.scrollTop = chatThread.scrollHeight;
+            // var chatThread = document.getElementById("chat-thread");
+            // chatThread.scrollTop = chatThread.scrollHeight;
 
             // Enable send button and remove spinner
-            document.getElementById("send-button").disabled = false;
+            // document.getElementById("send-button").disabled = false;
             // document.body.removeChild(spinner);
             $('#PDloader, .PDloading').css('display' , 'none');
 
             // Clear user input
-            document.getElementById("prompt-textarea").value = "";
+            // document.getElementById("prompt-textarea").value = "";
         } else {
             console.error('Error in sending message:', data.message);
         }

@@ -1,10 +1,21 @@
-import os
+from datetime import datetime
+import json
+import urllib.parse
 
-def get_params(search_resource: str, search_index: str, search_query: str):
-    # SEARCH_INDEX_TYPE_EUGENIUS_GSC_SOURCEDOCS
-    resource = search_resource.replace('-', '_').upper()
-    index = search_index.replace("-", "_").upper()
-    index_type = os.environ.get(f"SEARCH_INDEX_TYPE_{resource}_{index}")
+__all__ = [
+    "parse_search_request",
+    "get_params",
+]
+
+def parse_search_request(json_string: dict):
+    return (
+        json_string.get("search_query", ""),
+        json_string.get("search_resource", "none"),
+        json_string.get("search_index", "none"),
+    )
+
+
+def get_params(index_type: str, search_query: str):
     if index_type:
         if index_type == "standard-chunked":
             return get_params_standard_chunked(search_query)
@@ -78,3 +89,48 @@ def get_params_standard_chunked(search_request):
         # '$select': '*',
         #'$filter': 'language eq \'en\''
     }
+
+
+def parse_search_results(payload: dict):
+    results = []
+    count = payload.get("@odata.count", "0")
+    values = payload.get("value", [])
+
+    for value in values:
+        source_location = ">>>" + urllib.parse.unquote(
+            value["url"][8:].split("/", 1)[1]
+        )
+        if "filename" in value:
+            source_name = value["filename"]
+        elif "filepath" in value:
+            source_name = value["filepath"]
+        else:
+            source_name = "NOT IDENTIFIED"
+
+        if "chunk_id" in value:
+            source_name += f" (chunk {value['chunk_id']})"
+
+        highlights = []
+        if "@search.highlights" in value:
+            for highlight in value["@search.highlights"].get("content", []):
+                escape_value = "\n"
+                highlights.append(f"{highlight.replace(escape_value, '<br>')}")
+
+        captions = []
+        if "@search.captions" in value:
+            for caption in value["@search.captions"]:
+                escape_value = "\n"
+                captions.append(
+                    f"{caption['highlights'].replace(escape_value, '<br>')}"
+                )
+
+        results.append(
+            {
+                "filename": source_name,
+                "url": source_location,
+                "highlights": highlights,
+                "captions": captions,
+            }
+        )
+
+    return {"count": count, "values": results}

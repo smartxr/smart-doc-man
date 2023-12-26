@@ -172,6 +172,10 @@ select {
     height: fit-content;
 }
 
+.extended-frame {
+    max-width: 98%;
+}
+
 .chat-flow {
     overflow: visible; 
     display: grid;
@@ -254,6 +258,29 @@ select {
     margin-bottom: 10px;
     width: 20%;
     cursor: pointer;
+}
+
+.searchurl {
+    font-size: 12px;
+    color: gray;
+}
+
+.searchtitle {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.highlight {
+    background-color: lightyellow;
+    /* display: inline-block; */
+    /* display: block; */
+    padding: 5px;
+    /* width: 70vw; */
+    cursor: text;
+  }
+
+.searchresults {
+    border-top: 1px solid black;
 }
 
 
