@@ -3,7 +3,7 @@
 from . import messaging, entities
 import os
 
-__all__ = ["parse_search_request", "parse_completions_message", "get_chat_complition"]
+__all__ = ["parse_search_request", "get_search_results", "parse_search_results"]
 
 
 ### -= Messaging =-

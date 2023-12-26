@@ -5,6 +5,9 @@ import urllib.parse
 __all__ = [
     "parse_search_request",
     "get_params",
+    "get_params_standard",
+    "get_params_standard_chunked",
+    "parse_search_results",
 ]
 
 def parse_search_request(json_string: dict):

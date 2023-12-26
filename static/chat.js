@@ -1,4 +1,3 @@
-
 let conversationHistory = [];
         
 function sendMessage() {

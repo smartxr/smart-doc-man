@@ -92,7 +92,7 @@ def run_search():
 
     # Get request body
     data = request.get_json()
-    print(data)
+    # print(data)
 
     # Parse chat request coming from the web-page
     (
@@ -115,26 +115,26 @@ def run_search():
 
 
     # Get data from Search API
-    # response = sdm_search.get_search_results(
-    #     search_query, search_resource, search_index_name,
-    # )
+    response = sdm_search.get_search_results(
+        search_query, search_resource, search_index_name,
+    )
 
-    # if response.status_code != 200:
-    #     return jsonify({"status": "error", "message": "Error in Search API response"})
+    if response.status_code != 200:
+        return jsonify({"status": "error", "message": "Error in Search API response"})
     
-    # payload = response.json()
+    payload = response.json()
 
-    # # Save payload into a sample file
+    # Save payload into a sample file
     # with open("sample_search_payload.json", "w") as file:
     #     json.dump(payload, file)
 
 
     # Load sample_search_payload into payload variable
-    with open("sample_search_payload.json", "r") as file:
-        payload = json.load(file)
+    # with open("sample_search_payload.json", "r") as file:
+    #     payload = json.load(file)
 
     result = sdm_search.parse_search_results(payload)
-    print(result)
+    # print(result)
 
     return jsonify(
         {"status": "success", "result": result}
