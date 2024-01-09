@@ -11,26 +11,27 @@ __all__ = [
 ]
 
 def parse_search_request(parameters: dict):
+    page_param_text = parameters.get("page", 1)
     return (
         parameters.get("search_query", ""),
         parameters.get("search_resource", "none"),
         parameters.get("search_index", "none"),
-        parameters.get("page", 1),
+        int(page_param_text) if str(page_param_text).isdigit() else 1,
     )
 
 
-def get_params(index_type: str, search_query: str):
+def get_params(index_type: str, search_query: str, search_page: int, page_size: int):
     if index_type:
         if index_type == "standard-chunked":
-            return get_params_standard_chunked(search_query)
+            return get_params_standard_chunked(search_query, search_page, page_size)
         # elif index_type == 'standard-whole':
         #     return get_params_standard_whole(search_query)
         else:
-            return get_params_standard(search_query)
-    return get_params_standard(search_query)
+            return get_params_standard(search_query, search_page, page_size)
+    return get_params_standard(search_query, search_page, page_size)
 
 
-def get_params_standard(search_request):
+def get_params_standard(search_request, search_page: int, page_size: int):
     return {
         "api-version": "2023-11-01",
         "search": search_request,  # 'music*',
@@ -55,14 +56,16 @@ def get_params_standard(search_request):
         # 'semanticFilters': 'true',
         # 'semanticSort': 'true',
         "$count": "true",
-        "$top": "50",
-        "$skip": "0",
+        # "$top": "50",
+        "$top": page_size,
+        # "$skip": "0",
+        "$skip": (search_page - 1) * page_size,
         "$select": "filename,url",  # filepath # *
         #'$filter': 'language eq \'en\''
     }
 
 
-def get_params_standard_chunked(search_request):
+def get_params_standard_chunked(search_request, search_page: int, page_size: int):
     return {
         "api-version": "2023-11-01",
         "search": search_request,  # 'music*',
@@ -87,17 +90,19 @@ def get_params_standard_chunked(search_request):
         # 'semanticFilters': 'true',
         # 'semanticSort': 'true',
         "$count": "true",
-        "$top": "50",
-        "$skip": "0",
+        # "$top": "50",
+        "$top": page_size,
+        # "$skip": "0",
+        "$skip": (search_page - 1) * page_size,
         "$select": "filepath,url,chunk_id",
         # '$select': '*',
         #'$filter': 'language eq \'en\''
     }
 
 
-def parse_search_results(payload: dict):
+def parse_search_results(payload: dict, search_page: int, page_size: int):
     results = []
-    count = payload.get("@odata.count", "0")
+    count = int(payload.get("@odata.count", "0"))
     values = payload.get("value", [])
 
     for value in values:
@@ -137,4 +142,13 @@ def parse_search_results(payload: dict):
             }
         )
 
-    return {"count": count, "values": results}
+    total_pages = int(count / page_size)
+    if count % page_size != 0:
+        total_pages += 1
+    return {
+        "count": count,
+        "search_page": search_page, 
+        "page_size": page_size,
+        "total_pages": total_pages,
+        "values": results,
+    }

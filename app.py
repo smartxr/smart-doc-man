@@ -117,7 +117,7 @@ def run_search():
 
     # Get data from Search API
     response = sdm_search.get_search_results(
-        search_query, search_resource, search_index_name,
+        search_query, search_resource, search_index_name, search_page,
     )
 
     if response.status_code != 200:
@@ -135,7 +135,7 @@ def run_search():
     # with open("sample_search_payload.json", "r") as file:
     #     payload = json.load(file)
 
-    result = sdm_search.parse_search_results(payload)
+    result = sdm_search.parse_search_results(payload, search_page)
     # print(result)
 
     return jsonify(

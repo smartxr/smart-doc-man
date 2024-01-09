@@ -1,3 +1,18 @@
+function publishPaging(page = 1, count = 1) {
+    var searchPages = document.getElementById("search_pages");
+    searchPages.innerHTML = `<a href="#">&laquo;</a>`;
+
+    for (let i = 1; i <= count; i++) {
+        if (i === page) {
+            searchPages.innerHTML += `<a href='javascript:;' onclick='runSearch(${i});' class="active">${i}</a>`;
+        } else {
+            searchPages.innerHTML += `<a href='javascript:;' onclick='runSearch(${i});'>${i}</a>`;
+        }
+    }
+
+    searchPages.innerHTML += `<a href="#">&raquo;</a>`;
+}
+
 function runSearch(page = 1) {
     // Get seed message
     var searchPhrase = document.getElementById("srchPhrase").value;
@@ -23,11 +38,13 @@ function runSearch(page = 1) {
         if (data.status === 'success') {
             var srchCountLabel = document.getElementById("search_count_label");
             srchCountLabel.innerHTML = data.result["count"];
+            var searchPageSize = data.result["page_size"];
 
+            publishPaging(page, data.result["total_pages"]);
 
             var searchFlow = document.getElementById("search-flow");
             
-            // Update chat history with user message
+            // Clear previous Search results
             searchFlow.innerHTML = ``;
             // searchFlow.innerHTML = `
             //     <div class="user-message">
@@ -48,6 +65,7 @@ function runSearch(page = 1) {
             // }
             
             // Update chat history with server response
+            let record_num = (searchPageSize * (page - 1)) + 1;
             for (let value of data.result["values"]) {
 
                 // Building Highlights section
@@ -78,6 +96,7 @@ function runSearch(page = 1) {
                 searchFlow.innerHTML += `
                     <div style="max-width: 98%;">
                         <div>
+                            <p><span class="searchrecordnum">${ record_num++ }.</span></p>
                             <p>
                                 <span class="searchtitle">${ value.filename }</span><br>
                                 <span class="searchurl">${ value.url }:</span>

@@ -1,7 +1,7 @@
 import os
 import requests
 
-__all__ = ["get_request_uri", "run_search_request", "get_index_type"]
+__all__ = ["get_request_uri", "run_search_request", "get_index_type", "get_search_page_size"]
 
 def get_index_type(search_resource: str, search_index: str):
     resource = search_resource.replace('-', '_').upper()
@@ -33,3 +33,6 @@ def run_search_request(request_uri: str, search_resource: str):
 
     # Make the HTTP request
     return requests.get(request_uri, headers=headers)
+
+def get_search_page_size():
+    return int(os.environ.get('SEARCH_PAGE_SIZE', 30))
