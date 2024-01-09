@@ -13,7 +13,7 @@ __all__ = [
 def parse_search_request(parameters: dict):
     page_param_text = parameters.get("page", 1)
     return (
-        parameters.get("search_query", ""),
+        urllib.parse.unquote(parameters.get("search_query", "")),
         parameters.get("search_resource", "none"),
         parameters.get("search_index", "none"),
         int(page_param_text) if str(page_param_text).isdigit() else 1,

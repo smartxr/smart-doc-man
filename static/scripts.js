@@ -50,7 +50,7 @@ $(document).ready(function() {
     // Hide spinner
     // $('#PDloader, .PDloading').css('display' , 'none');
 
-    // Event listener for Ctrl+Enter
+    // Event listener for Ctrl+Enter for Chat
     document.getElementById("prompt-textarea").addEventListener("keydown", function(event) {
         // if (event.ctrlKey && event.keyCode === 13) {
         if (event.ctrlKey && event.key === "Enter") {

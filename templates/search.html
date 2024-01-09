@@ -10,7 +10,7 @@
     <select name="indexSelector_srch" id="indexSelector_srch"></select>
     <br>
     <label for="srcline">Search phrase:</label>
-    <input type="text" name="srchPhrase" id="srchPhrase">
+    <input type="text" name="srchPhrase" id="srchPhrase" onkeydown="if(event.keyCode === 13) runSearch()">
     <br>
     <input type="button" value="Search" id="search-button" onclick="runSearch()">
     <label for="search-button">Count: <span id="search_count_label">0</span></label>

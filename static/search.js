@@ -89,7 +89,7 @@ function runSearch(page = 1) {
                 let captions_html = "";
                 if (value.captions !== undefined && Array.isArray(value.captions) && value.captions.length > 0) {
                     for (let caption of value.captions) {
-                        captions_html += ` <p class="highlight">${ caption }</p>`
+                        captions_html += `<p class="highlight">${ caption }</p>`
                     }
                 }
                 else {
