@@ -51,12 +51,13 @@ $(document).ready(function() {
     // $('#PDloader, .PDloading').css('display' , 'none');
 
     // Event listener for Ctrl+Enter
-    // document.getElementById("prompt-textarea").addEventListener("keydown", function(event) {
-    //     // if (event.ctrlKey && event.key === "Enter") {
-    //     if (event.ctrlKey && event.keyCode === 13) {
-    //         sendMessage();
-    //     }
-    // });
+    document.getElementById("prompt-textarea").addEventListener("keydown", function(event) {
+        // if (event.ctrlKey && event.keyCode === 13) {
+        if (event.ctrlKey && event.key === "Enter") {
+            // console.info('Key Down');
+            sendMessage();
+        }
+    });
 
     // Event listener for Ctrl+Enter
     // document.getElementById("historyItem").addEventListener("click", function(event) {
