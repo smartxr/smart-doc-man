@@ -85,13 +85,13 @@ def send_message():
     )
 
 
-@app.route("/run_search", methods=["POST"])
+@app.route("/run_search", methods=["GET"])
 def run_search():
     # user_message = request.form['user_message']
     # print(request.form['ref_id'])
 
     # Get request body
-    data = request.get_json()
+    data = request.args.to_dict()
     # print(data)
 
     # Parse chat request coming from the web-page
@@ -99,6 +99,7 @@ def run_search():
         search_query,
         search_resource,
         search_index_name,
+        search_page,
     ) = sdm_search.parse_search_request(data)
 
     # Check is Search Query was provided

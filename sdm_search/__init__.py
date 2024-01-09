@@ -9,9 +9,8 @@ __all__ = ["parse_search_request", "get_search_results", "parse_search_results"]
 ### -= Messaging =-
 
 
-def parse_search_request(json_message: str):
-    return messaging.parse_search_request(json_message)
-
+def parse_search_request(parameters: dict):
+    return messaging.parse_search_request(parameters)
 
 
 ### -= Search =-

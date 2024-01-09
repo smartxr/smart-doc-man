@@ -1,4 +1,4 @@
-function runSearch() {
+function runSearch(page = 1) {
     // Get seed message
     var searchPhrase = document.getElementById("srchPhrase").value;
     if (searchPhrase.trim() === "") return;
@@ -11,21 +11,13 @@ function runSearch() {
 
 
     // Send user message to server
-    fetch('/run_search', {
-        method: 'POST',
-        headers: {
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-            'Content-Type': 'application/json',
-        },
-        // body: 'user_message=' + encodeURIComponent(userMessage),
-        // body: 'user_message=' + encodeURIComponent(userMessage) + '&ref_id=xyz',
-        // body: {user_message: encodeURIComponent(userMessage), conversation_history: conversationHistory}
-        body: JSON.stringify({
-            search_query: searchPhrase,
-            search_resource: document.getElementById("resourceSelector_srch").value,
-            search_index: document.getElementById("indexSelector_srch").value,
-        }),
-    })            
+    fetch('/run_search'
+        + '?search_query=' + encodeURIComponent(searchPhrase)
+        + '&search_resource=' + document.getElementById("resourceSelector_srch").value
+        + '&search_index=' + document.getElementById("indexSelector_srch").value
+        + '&page=' + page,
+        {method: 'GET', }
+    )
     .then(response => response.json())
     .then(data => {
         if (data.status === 'success') {

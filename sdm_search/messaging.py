@@ -10,11 +10,12 @@ __all__ = [
     "parse_search_results",
 ]
 
-def parse_search_request(json_string: dict):
+def parse_search_request(parameters: dict):
     return (
-        json_string.get("search_query", ""),
-        json_string.get("search_resource", "none"),
-        json_string.get("search_index", "none"),
+        parameters.get("search_query", ""),
+        parameters.get("search_resource", "none"),
+        parameters.get("search_index", "none"),
+        parameters.get("page", 1),
     )
 
 

@@ -283,8 +283,18 @@ select {
     border-top: 1px solid black;
 }
 
+.pagination_container {
+    height: auto;
+    text-align: center;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+}
+
 .pagination {
   display: inline-block;
+  /* display: flex; */
+  /* text-align: center; */
 }
 
 .pagination a {
