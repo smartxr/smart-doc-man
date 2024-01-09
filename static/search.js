@@ -1,6 +1,10 @@
 function publishPaging(page = 1, count = 1) {
     var searchPages = document.getElementById("search_pages");
-    searchPages.innerHTML = `<a href="#">&laquo;</a>`;
+    searchPages.innerHTML = ``;
+    
+    if (page !== 1) {
+        searchPages.innerHTML += `<a href='javascript:;' onclick='runSearch(${page - 1});'>&laquo;</a>`;
+    }
 
     for (let i = 1; i <= count; i++) {
         if (i === page) {
@@ -10,7 +14,9 @@ function publishPaging(page = 1, count = 1) {
         }
     }
 
-    searchPages.innerHTML += `<a href="#">&raquo;</a>`;
+    if (page !== count) {
+        searchPages.innerHTML += `<a href='javascript:;' onclick='runSearch(${page + 1});'>&raquo;</a>`;
+    }
 }
 
 function runSearch(page = 1) {
@@ -96,11 +102,9 @@ function runSearch(page = 1) {
                 searchFlow.innerHTML += `
                     <div style="max-width: 98%;">
                         <div>
-                            <p><span class="searchrecordnum">${ record_num++ }.</span></p>
-                            <p>
-                                <span class="searchtitle">${ value.filename }</span><br>
-                                <span class="searchurl">${ value.url }:</span>
-                            </p>
+                            <p class="searchrecordnum"><span>${ record_num++ }</span></p>
+                            <p class="searchtitle"><span>${ value.filename }</span></p>
+                            <p class="searchurl"><span>${ value.url }</span></p>
                         </div>
                         <div class="searchresults">
                             <p><b>Highlights:</b></p>

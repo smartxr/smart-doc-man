@@ -262,12 +262,21 @@ select {
 
 .searchurl {
     font-size: 12px;
+    margin-top: 0px;
     color: gray;
 }
 
 .searchtitle {
     font-weight: bold;
     font-size: 20px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.searchrecordnum {
+    font-size: 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 .highlight {
