@@ -1,122 +1,39 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-  <link rel="icon" href="{{ url_for('static', filename='favicon-16x16.png') }}" type="image/png" sizes="16x16">
-  <link rel="icon" href="{{ url_for('static', filename='favicon-32x32.png') }}" type="image/png" sizes="32x32">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta charset="UTF-8">
-  <title>Chat Web-site</title>
-</head>
-<body>
-    <div class="header">
-        <h1>Smart Document Management System</h1>
+<div class="chat-title">
+    <label for="resourceSelector_srch">Search Resource:</label>
+    <select name="resourceSelector_srch" id="resourceSelector_srch" onchange="srchResourceChange(this)">
+        {% for key in search_resources %}
+            <option value={{key}}>{{search_resources[key]}}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <label for="indexSelector_srch">Index:</label>
+    <select name="indexSelector_srch" id="indexSelector_srch"></select>
+    <br>
+    <label for="srcline">Search phrase:</label>
+    <input type="text" name="srchPhrase" id="srchPhrase" onkeydown="if(event.keyCode === 13) runSearch()">
+    <br>
+    <input type="button" value="Search" id="search-button" onclick="runSearch()">
+    <label for="search-button">Count: <span id="search_count_label">0</span></label>
+</div>
+<div class="chat-thread" id="search-thread">
+    <div class="chat-flow" id="search-flow">
+        <div>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Commodo viverra maecenas accumsan lacus vel facilisis. Quam vulputate dignissim suspendisse in est ante in nibh. Sapien eget mi proin sed libero. Nec feugiat in fermentum posuere. Sed turpis tincidunt id aliquet risus feugiat in. Augue neque gravida in fermentum et. Aenean euismod elementum nisi quis eleifend. Ut aliquam purus sit amet luctus venenatis lectus. Pharetra pharetra massa massa ultricies mi quis. Ipsum nunc aliquet bibendum enim facilisis gravida neque convallis a.
+        </div>
     </div>
-    
-    <dev class="main">
-        <div class="left-panel">
-            <div>
-                <ul>
-                    <li>Search</li>
-                    <li>LLM Analysis</li>
-                    <li>History</li>
-                    <li>Configuration</li>
-                    <li>Deploy Search</li>
-                </ul>
-            </div>
-        </div>
-        <div class="content-area">
-            <div class="chat-title">
-                <label for="resourceSelector">Search Resource:</label>
-                <select name="resourceSelector" id="resourceSelector">
-                    <!-- {% for key in search_resources %}
-                        <option value={{key}}>{{search_resources[key]}}</option>
-                    {% endfor %} -->
-                    <option value="Resource A">Resource A</option>
-                    <option value="Resource B" selected>Resource B</option>
-                </select>
-                <br>
-                <label for="indexSelector">Index:</label>
-                <select name="indexSelector" id="indexSelector">
-                    <option value="Resource A">Resource A</option>
-                    <option value="Resource B" selected>Resource B</option>    
-                </select>
-            </div>
-            <div class="chat-thread">
-                <div class="chat-flow">
-                    <div>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Commodo viverra maecenas accumsan lacus vel facilisis. Quam vulputate dignissim suspendisse in est ante in nibh. Sapien eget mi proin sed libero. Nec feugiat in fermentum posuere. Sed turpis tincidunt id aliquet risus feugiat in. Augue neque gravida in fermentum et. Aenean euismod elementum nisi quis eleifend. Ut aliquam purus sit amet luctus venenatis lectus. Pharetra pharetra massa massa ultricies mi quis. Ipsum nunc aliquet bibendum enim facilisis gravida neque convallis a.
-                    </div>
-                    <div class="user-message">
-                        Parturient montes nascetur ridiculus mus mauris. Curabitur vitae nunc sed velit dignissim sodales ut. Pretium aenean pharetra magna ac placerat vestibulum lectus mauris. Rhoncus urna neque viverra justo nec ultrices dui sapien eget. Pellentesque sit amet porttitor eget. Porta nibh venenatis cras sed felis. Habitasse platea dictumst vestibulum rhoncus est pellentesque elit ullamcorper. Magna etiam tempor orci eu lobortis elementum nibh tellus molestie. Volutpat diam ut venenatis tellus in metus vulputate eu. Sed turpis tincidunt id aliquet risus feugiat. At ultrices mi tempus imperdiet nulla malesuada pellentesque. Aliquet enim tortor at auctor urna. Tempor id eu nisl nunc mi ipsum. Non consectetur a erat nam at lectus. Sagittis nisl rhoncus mattis rhoncus. Tortor vitae purus faucibus ornare suspendisse.
-                    </div>
-                    <div>
-                        Gravida cum sociis natoque penatibus et. Vel turpis nunc eget lorem dolor sed viverra. Proin fermentum leo vel orci porta non pulvinar. In metus vulputate eu scelerisque felis. Tristique senectus et netus et malesuada fames ac turpis. Lorem ipsum dolor sit amet consectetur. Sagittis orci a scelerisque purus semper. Vel fringilla est ullamcorper eget nulla. Nulla facilisi cras fermentum odio eu feugiat pretium nibh. Tempor commodo ullamcorper a lacus vestibulum sed arcu non.
-                    </div>
-                    <div class="user-message">
-                        Erat imperdiet sed euismod nisi porta lorem mollis aliquam ut. Sit amet mattis vulputate enim nulla aliquet. In vitae turpis massa sed elementum tempus egestas sed. Velit laoreet id donec ultrices. Et malesuada fames ac turpis. Volutpat lacus laoreet non curabitur gravida arcu ac. Senectus et netus et malesuada fames ac turpis egestas maecenas. Ac tortor vitae purus faucibus ornare suspendisse sed nisi lacus. Consectetur adipiscing elit ut aliquam purus sit amet luctus. Consectetur adipiscing elit ut aliquam purus sit. Consectetur a erat nam at lectus urna. Velit aliquet sagittis id consectetur purus ut. Sit amet nisl suscipit adipiscing. Neque convallis a cras semper auctor neque vitae tempus. Justo laoreet sit amet cursus sit amet dictum sit. Sed tempus urna et pharetra pharetra massa. Enim nunc faucibus a pellentesque sit amet porttitor eget. Eget est lorem ipsum dolor sit amet consectetur adipiscing elit. Fames ac turpis egestas maecenas pharetra convallis posuere morbi. Amet venenatis urna cursus eget nunc scelerisque viverra mauris.
-                    </div>
-                    <div>
-                        Et ligula ullamcorper malesuada proin libero nunc consequat interdum varius. Et magnis dis parturient montes nascetur. Urna nec tincidunt praesent semper. Vel risus commodo viverra maecenas accumsan. Dictum sit amet justo donec. At tellus at urna condimentum mattis pellentesque. Lectus magna fringilla urna porttitor rhoncus dolor. Adipiscing elit pellentesque habitant morbi. Nisi quis eleifend quam adipiscing vitae proin. Malesuada fames ac turpis egestas integer eget aliquet nibh praesent. Facilisi cras fermentum odio eu feugiat pretium nibh. Porttitor rhoncus dolor purus non enim praesent elementum. Quam elementum pulvinar etiam non quam lacus suspendisse faucibus. Tortor at auctor urna nunc. Dolor morbi non arcu risus quis varius quam quisque id. Mauris a diam maecenas sed enim ut sem. Gravida cum sociis natoque penatibus. Tortor consequat id porta nibh venenatis cras.
-                    </div>
-                    <div>
-                        Odio pellentesque diam volutpat commodo. Non odio euismod lacinia at quis risus sed vulputate. Viverra tellus in hac habitasse platea dictumst vestibulum rhoncus. Sodales ut eu sem integer vitae justo eget. Vitae ultricies leo integer malesuada nunc vel risus commodo. Amet justo donec enim diam vulputate ut. Tortor pretium viverra suspendisse potenti nullam. Sit amet mauris commodo quis imperdiet massa tincidunt. Amet nisl purus in mollis nunc sed id semper. Arcu dictum varius duis at consectetur. Sit amet justo donec enim diam vulputate. Ultricies mi quis hendrerit dolor magna eget. Lectus arcu bibendum at varius vel pharetra.
-                    </div>
-                    <div class="user-message">
-                        Etiam erat velit scelerisque in dictum. Netus et malesuada fames ac turpis egestas integer eget. Vitae auctor eu augue ut lectus. Non diam phasellus vestibulum lorem sed risus ultricies tristique. Arcu risus quis varius quam quisque. Elit ut aliquam purus sit amet. Cursus euismod quis viverra nibh cras pulvinar mattis nunc sed. Lectus vestibulum mattis ullamcorper velit sed ullamcorper. Nunc congue nisi vitae suscipit tellus mauris a. Lorem dolor sed viverra ipsum nunc aliquet bibendum enim. Tincidunt augue interdum velit euismod in. Eleifend donec pretium vulputate sapien nec sagittis aliquam malesuada. Facilisis gravida neque convallis a. Vitae semper quis lectus nulla at. Vitae auctor eu augue ut. Amet massa vitae tortor condimentum lacinia.
-                    </div>
-                    <div>
-                        Phasellus faucibus scelerisque eleifend donec pretium vulputate sapien. Sit amet risus nullam eget felis eget nunc lobortis. Blandit turpis cursus in hac habitasse platea dictumst. Sed euismod nisi porta lorem mollis aliquam. Interdum velit laoreet id donec. Leo integer malesuada nunc vel risus commodo viverra maecenas accumsan. Enim facilisis gravida neque convallis a cras semper auctor. Purus sit amet volutpat consequat mauris nunc congue nisi. Orci eu lobortis elementum nibh tellus molestie nunc non. Scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus. Dolor purus non enim praesent. Lorem ipsum dolor sit amet. Pharetra convallis posuere morbi leo. Felis bibendum ut tristique et egestas quis ipsum. Enim sit amet venenatis urna. A diam sollicitudin tempor id eu nisl nunc. Tortor condimentum lacinia quis vel. Faucibus purus in massa tempor nec feugiat nisl. Id aliquet lectus proin nibh.
-                    </div>
-                    <div>
-                        Sed adipiscing diam donec adipiscing tristique risus nec. Sit amet nisl suscipit adipiscing bibendum est. Platea dictumst quisque sagittis purus. Mi in nulla posuere sollicitudin aliquam ultrices sagittis. Morbi non arcu risus quis varius quam quisque id diam. Molestie a iaculis at erat pellentesque adipiscing commodo. Interdum velit euismod in pellentesque. Lacinia at quis risus sed vulputate. Vulputate mi sit amet mauris commodo quis. Ac feugiat sed lectus vestibulum mattis ullamcorper velit sed ullamcorper. Tortor consequat id porta nibh venenatis cras sed felis. Convallis convallis tellus id interdum velit laoreet id donec. Placerat orci nulla pellentesque dignissim enim. Morbi tristique senectus et netus. Turpis egestas sed tempus urna et pharetra pharetra massa. Faucibus in ornare quam viverra orci sagittis. Risus pretium quam vulputate dignissim suspendisse in. Ornare arcu odio ut sem. Ut pharetra sit amet aliquam.
-                    </div>
-                    <div>
-                        Pharetra magna ac placerat vestibulum lectus mauris ultrices eros in. Ut diam quam nulla porttitor massa id. Mi proin sed libero enim sed faucibus. Consectetur libero id faucibus nisl tincidunt eget. In hac habitasse platea dictumst quisque sagittis purus. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Felis eget velit aliquet sagittis id consectetur purus ut faucibus. Posuere sollicitudin aliquam ultrices sagittis orci a. Praesent elementum facilisis leo vel. Vitae et leo duis ut diam quam. Sit amet purus gravida quis blandit turpis cursus in. Eu lobortis elementum nibh tellus. Congue mauris rhoncus aenean vel elit scelerisque mauris pellentesque pulvinar. Facilisi etiam dignissim diam quis enim. Ipsum faucibus vitae aliquet nec ullamcorper. Diam sit amet nisl suscipit adipiscing bibendum est. Arcu bibendum at varius vel. Tempus quam pellentesque nec nam aliquam sem et. Gravida cum sociis natoque penatibus et magnis dis.
-                    </div>
-                </div>
-            </div>
-            <div style="height: 10px;">
-                <!-- Spacer -->
-            </div>
-            <div class="chatprompt-area">
-                <div class="clear-container">
-                    <button type="button" id="clearchat-button" aria-label="clear chat button" onclick="clearChat()">
-                        Broom
-                    </button>
-                    <div>
-                    </div>
-                </div>
-                <div style="width: 3px;"><!-- Spacer --></div>
-                <div class="prompt-container">
-                    <textarea contenteditable role="textbox" id="prompt-textarea" placeholder="Message ChatGPT"></textarea>
-                </div>
-                <div class="send-container">
-                    <button type="button" id="send-button" onclick="sendMessage()">
-                        <img src="{{ url_for('static', filename='Send.svg') }}" alt="Send" />
-                    </button>
-                </div>
-            </div>
-            <div style="height: 10px;"><!-- Spacer --></div>
-        </div>
-        <div class="right-panel">
-            <div class="aside">
-              <h2>Step 1</h2>
-              <p>Select operation on the left.</p>
-              <h2>Step 2</h2>
-              <p>Provide your request.</p>
-              <h2>Step 3</h2>
-              <p>Behold the results.</p>
-            </div>
-        </div>
-    </dev>
+</div>
 
-    <div class="footer">
-        <div>Eugene Froimson (c) - eugene@froim.zone - 2023</div>
-    </div>
-</body>
-</html>
+<div class="pagination_container"><!-- Spacer -->
+	
+	<div class="pagination" id="search_pages">
+      <a href="#">&laquo;</a>
+	  <a href='javascript:;' onclick='runSearch(2);'>1</a>
+	  <a href="#" class="active">2</a>
+	  <a href="#">3</a>
+	  <a href="#">4</a>
+	  <a href="#">5</a>
+	  <a href="#">6</a>
+	  <a href="#">&raquo;</a>
+	</div>
 
-
+</div>

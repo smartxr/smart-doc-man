@@ -19,6 +19,7 @@ def get_doclib_config(search_resource: str, search_index_name: str, chat_seed: s
         return None
     else:
         return {
+            # dict(dataSources = [
             "dataSources": [
                 {
                     "type": "AzureCognitiveSearch",
@@ -48,5 +49,7 @@ def run_chat_complition(
             "OPENAI_DEPLOYMENT_ID"
         ),  # e.g. gpt-35-instant TODO: Remove it as redundant
         messages=chat_history,
+        # max_tokens=2000,
+        # few_shots
         extra_body=extra_body_value,
     )

@@ -1,0 +1,31 @@
+{% extends "index.html" %}
+{% block head %}
+    <h1>Smart Document Management System</h1>
+{% endblock %}
+
+{% block left_panel %}
+    <div>
+        <ul>
+            <li id="searchItem" onclick="tabClick(this.id)">Search</li>
+            <li id="chatItem" onclick="tabClick(this.id)">LLM Analysis</li>
+            <li id="historyItem" onclick="tabClick(this.id)">History</li>
+            <li id="configItem" onclick="tabClick(this.id)">Configuration</li>
+            <li id="deployItem" onclick="tabClick(this.id)">Deploy Search</li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block right_panel %}
+    <div class="aside">
+        <h2>Step 1</h2>
+        <p>Select operation on the left.</p>
+        <h2>Step 2</h2>
+        <p>Provide your request.</p>
+        <h2>Step 3</h2>
+        <p>Behold the results.</p>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <div>Eugene Froimson &copy; - eugene@froim.zone - 2023</div>
+{% endblock %}
