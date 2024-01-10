@@ -67,3 +67,9 @@ jobs:
           app-name: 'Eugenius'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D68AC88B3B6A49DF9AA48F1221C1B4A3 }}
+
+
+      - name: Configure Application Settings
+        run: |
+          az webapp config appsettings set --resource-group 'Workloads' --name 'Eugenius' --settings WEB_PAGE_SIZE=10
+    
