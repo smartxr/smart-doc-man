@@ -123,15 +123,17 @@ def parse_search_results(payload: dict, search_page: int, page_size: int):
         if "@search.highlights" in value:
             for highlight in value["@search.highlights"].get("content", []):
                 escape_value = "\n"
-                highlights.append(f"{highlight.replace(escape_value, '<br>')}")
+                if isinstance(highlight, str):
+                    highlights.append(f"{highlight.replace(escape_value, '<br>')}")
 
         captions = []
         if "@search.captions" in value:
             for caption in value["@search.captions"]:
                 escape_value = "\n"
-                captions.append(
-                    f"{caption['highlights'].replace(escape_value, '<br>')}"
-                )
+                if isinstance(caption, str):
+                    captions.append(
+                        f"{caption['highlights'].replace(escape_value, '<br>')}"
+                    )
 
         results.append(
             {

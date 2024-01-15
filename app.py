@@ -8,7 +8,7 @@ import sdm_chat, sdm_search
 app = Flask(__name__)
 
 # Chat seeding system message
-chat_seed = "Answer questions in a sarcastic way"
+chat_seed = "You are a helpful assistant who helps with searching through the library and finding answers in relevant documents."
 
 
 @app.route("/")
