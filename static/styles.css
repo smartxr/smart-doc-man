@@ -240,14 +240,13 @@ select {
     text-decoration: underline;
 }
 
-
 #srchPhrase {
     padding-top: 5px;
     padding-bottom: 5px;
     font-size: 14px;
     margin-top: 10px;
     margin-bottom: 10px;
-    width: 500px;
+    width: 90%;
 }
 
 #search-button {
