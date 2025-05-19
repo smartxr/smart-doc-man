@@ -1,0 +1,36 @@
+{
+  "name": "aviation-indexer",
+  "description": "Aviation Regulations datastore",
+  "dataSourceName": "aviation",
+  "skillsetName": null,
+  "targetIndexName": "aviation-index",
+  "disabled": null,
+  "schedule": {
+    "interval": "P1D",
+    "startTime": "2025-05-19T06:27:08.000Z"
+  },
+  "parameters": {
+    "batchSize": null,
+    "maxFailedItems": -1,
+    "maxFailedItemsPerBatch": -1,
+    "configuration": {
+      "parsingMode": "json",
+      "indexedFileNameExtensions": ".json"
+    }
+  },
+  "fieldMappings": [
+    {
+      "sourceFieldName": "metadata_storage_path",
+      "targetFieldName": "id",
+      "mappingFunction": {
+        "name": "base64Encode",
+        "parameters": {
+          "useHttpServerUtilityUrlTokenEncode": false
+        }
+      }
+    }
+  ],
+  "outputFieldMappings": [],
+  "cache": null,
+  "encryptionKey": null
+}

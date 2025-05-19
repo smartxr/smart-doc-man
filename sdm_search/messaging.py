@@ -24,8 +24,8 @@ def get_params(index_type: str, search_query: str, search_page: int, page_size: 
     if index_type:
         if index_type == "standard-chunked":
             return get_params_standard_chunked(search_query, search_page, page_size)
-        # elif index_type == 'standard-whole':
-        #     return get_params_standard_whole(search_query)
+        elif index_type == "chunked-std-v2":
+            return get_params_chunked_std_v2(search_query, search_page, page_size)
         else:
             return get_params_standard(search_query, search_page, page_size)
     return get_params_standard(search_query, search_page, page_size)
@@ -100,14 +100,52 @@ def get_params_standard_chunked(search_request, search_page: int, page_size: int
     }
 
 
+def get_params_chunked_std_v2(search_request, search_page: int, page_size: int):
+    return {
+        "api-version": "2025-05-01-preview",
+        "search": search_request,  # 'music*',
+        "queryType": "semantic",  # full, semantic
+        "searchMode": "all",
+        "searchFields": "content,title,filepath,filename,url",
+        "highlight": "content",
+        "highlightPreTag": "<mark>",
+        "highlightPostTag": "</mark>",
+        #'queryLanguage': 'en-US',
+        #'enableFuzzyMatching': 'true',
+        #'fuzzyType': 'auto',
+        #'speller': 'lexicon',
+        #'scoringProfile': 'text',
+        "captions": "extractive",
+        #'answerFields': 'extractive',
+        #'answers': 'extractive|count-3', # extractive%7Ccount-3
+        "semanticConfiguration": "default",
+        # 'semanticDistance': '2',
+        # 'semanticScore': '0.5',
+        # 'semanticHighlight': 'true',
+        # 'semanticFilters': 'true',
+        # 'semanticSort': 'true',
+        "$count": "true",
+        # "$top": "50",
+        "$top": page_size,
+        # "$skip": "0",
+        "$skip": (search_page - 1) * page_size,
+        "$select": "filepath,title,filename,url,page_number,image_index,chunk_id,id,last_updated",
+        # "select": "*"
+        #'$filter': 'language eq \'en\''
+    }
+
+
 def parse_search_results(payload: dict, search_page: int, page_size: int):
+    # print("Payload received:", payload)
     results = []
     count = int(payload.get("@odata.count", "0"))
     values = payload.get("value", [])
 
     for value in values:
-        source_location = ">>>" + urllib.parse.unquote(
-            value["url"][8:].split("/", 1)[1]
+        print('URL:', value["url"])
+        source_location = ">>> " + urllib.parse.unquote(
+            # value["url"][8:].split("/", 1)[1]
+            value["url"]
         )
         if "filename" in value:
             source_name = value["filename"]
@@ -116,8 +154,12 @@ def parse_search_results(payload: dict, search_page: int, page_size: int):
         else:
             source_name = "NOT IDENTIFIED"
 
+        if "page_number" in value:
+            source_name += f" Page {value['page_number']};"
+        if "image_index" in value and value["image_index"] != '0':
+            source_name += f" Image {value['image_index']};"
         if "chunk_id" in value:
-            source_name += f" (chunk {value['chunk_id']})"
+            source_name += f" Chunk {value['chunk_id']}"
 
         highlights = []
         if "@search.highlights" in value:
