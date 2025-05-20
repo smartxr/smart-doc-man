@@ -110,7 +110,7 @@ def get_params_chunked_std_v2(search_request, search_page: int, page_size: int):
         "highlight": "content",
         "highlightPreTag": "<mark>",
         "highlightPostTag": "</mark>",
-        #'queryLanguage': 'en-US',
+        "queryLanguage": "en-US",
         #'enableFuzzyMatching': 'true',
         #'fuzzyType': 'auto',
         #'speller': 'lexicon',
