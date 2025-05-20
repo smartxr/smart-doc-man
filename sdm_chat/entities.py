@@ -34,6 +34,19 @@ def get_doclib_config(search_resource: str, search_index_name: str, chat_seed: s
                         "topNDocuments": 10,  # Retrieved documents. Default - 5, maximum - 20
                         "roleInformation": chat_seed,
                         # "roleInformation": 'You are an AI assistant that helps people find information.',
+                        # "fields_mapping": {
+                        #     "content_fields_separator": "\\n",
+                        #     "content_fields": ["content"],
+                        #     # "filepath_field": "filepath",
+                        #     "filepath": "filename",
+                        #     "title_field": "title",
+                        #     "url_field": "url",
+                        #     "id_field": "id",
+                        #     "page_number_field": "page_number",
+                        #     "image_index_field": "image_index",
+                        #     "chunk_id_field": "chink_id",
+                        #     # "vector_fields": ["contentvector"]
+                        # },
                         "strictness": 1,  # default - 3, highest - 5, lowest - 1
                     },
                 }
@@ -44,12 +57,21 @@ def get_doclib_config(search_resource: str, search_index_name: str, chat_seed: s
 def run_chat_complition(
     client: AzureOpenAI, chat_history: list, extra_body_value: dict
 ):
-    return client.chat.completions.create(
-        model=os.environ.get(
-            "OPENAI_DEPLOYMENT_ID"
-        ),  # e.g. gpt-35-instant TODO: Remove it as redundant
-        messages=chat_history,
-        # max_tokens=2000,
-        # few_shots
-        extra_body=extra_body_value,
-    )
+    if extra_body_value:
+
+        return client.chat.completions.create(
+            model=os.environ.get(
+                "OPENAI_DEPLOYMENT_ID"
+            ),  # e.g. gpt-35-instant TODO: Remove it as redundant
+            messages=chat_history,
+            # max_tokens=2000,
+            # few_shots
+            extra_body=extra_body_value,
+        )
+    else:
+        return client.chat.completions.create(
+            model=os.environ.get(
+                "OPENAI_DEPLOYMENT_ID"
+            ),  # e.g. gpt-35-instant TODO: Remove it as redundant
+            messages=chat_history,
+        )

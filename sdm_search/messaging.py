@@ -106,7 +106,7 @@ def get_params_chunked_std_v2(search_request, search_page: int, page_size: int):
         "search": search_request,  # 'music*',
         "queryType": "semantic",  # full, semantic
         "searchMode": "all",
-        "searchFields": "content,title,filepath,filename,url",
+        "searchFields": "content,title,filepath,file_name_m,url",
         "highlight": "content",
         "highlightPreTag": "<mark>",
         "highlightPostTag": "</mark>",
@@ -129,7 +129,7 @@ def get_params_chunked_std_v2(search_request, search_page: int, page_size: int):
         "$top": page_size,
         # "$skip": "0",
         "$skip": (search_page - 1) * page_size,
-        "$select": "filepath,title,filename,url,page_number,image_index,chunk_id,id,last_updated",
+        "$select": "filepath,title,file_name_m,url,page_number,image_index,chunk_id,id,last_updated",
         # "select": "*"
         #'$filter': 'language eq \'en\''
     }
@@ -149,6 +149,8 @@ def parse_search_results(payload: dict, search_page: int, page_size: int):
         )
         if "filename" in value:
             source_name = value["filename"]
+        if "file_name_m" in value:
+            source_name = value["file_name_m"]
         elif "filepath" in value:
             source_name = value["filepath"]
         else:

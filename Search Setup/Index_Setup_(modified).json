@@ -14,7 +14,7 @@
       "synonymMaps": []
     },
     {
-      "name": "filename",
+      "name": "file_name_m",
       "type": "Edm.String",
       "searchable": true,
       "filterable": true,
@@ -100,7 +100,7 @@
     {
       "name": "id",
       "type": "Edm.String",
-      "searchable": false,
+      "searchable": true,
       "filterable": true,
       "retrievable": true,
       "stored": true,
@@ -128,7 +128,7 @@
       "filterable": false,
       "retrievable": true,
       "stored": true,
-      "sortable": false,
+      "sortable": true,
       "facetable": false,
       "key": false,
       "synonymMaps": []
@@ -136,11 +136,11 @@
     {
       "name": "is_deleted",
       "type": "Edm.String",
-      "searchable": false,
+      "searchable": true,
       "filterable": false,
       "retrievable": true,
       "stored": true,
-      "sortable": false,
+      "sortable": true,
       "facetable": false,
       "key": false,
       "synonymMaps": []
@@ -148,7 +148,7 @@
     {
       "name": "keywords",
       "type": "Edm.String",
-      "searchable": false,
+      "searchable": true,
       "filterable": false,
       "retrievable": true,
       "stored": true,

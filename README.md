@@ -54,6 +54,24 @@ Activate virtual environment
 
 
 ## Known issues
+### Field 'filename' blocks OpenAI to pass on parameters of the document from index.
+If 'filename' field is included in the index, OpenAI DataSource process does not populate 'filepath' field, which comes out blank even though it's populated in the index. In addition, certain behaviour observed in some cases when the value of 'filepath' field is included as a part of the 'content' field (concatenated to the end).
+
+Solution;
+Field 'filename' in the index was renamed to 'file_name_r'. Filed mapping was added to the Indexer to convert
+```
+{
+    "sourceFieldName": "filename",
+    "targetFieldName": "file_name_r"
+}
+```
+Modified Index data model included in the Search parsing procedures.
+Modified Index and Indexer are stored as "*_(Modified).json"
+
+### Field 'chunk_id' is not properly populated regardless
+Always comes back as "0" in the updated index structure.
+
+
 ### Execution policy error on script execution
 Error text like:
 ```

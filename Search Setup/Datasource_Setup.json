@@ -1,0 +1,20 @@
+{
+  "name": "aviation-datasource",
+  "description": null,
+  "type": "azureblob",
+  "subtype": null,
+  "indexerPermissionOptions": [],
+  "credentials": {
+    "connectionString": "DefaultEndpointsProtocol=https;AccountName=eugenius;AccountKey=..."
+  },
+  "container": {
+    "name": "aviation",
+    "query": null
+  },
+  "dataChangeDetectionPolicy": null,
+  "dataDeletionDetectionPolicy": {
+    "@odata.type": "#Microsoft.Azure.Search.NativeBlobSoftDeleteDeletionDetectionPolicy"
+  },
+  "encryptionKey": null,
+  "identity": null
+}

@@ -28,7 +28,11 @@
           "useHttpServerUtilityUrlTokenEncode": false
         }
       }
-    }
+    },
+	{
+      "sourceFieldName": "filename",
+      "targetFieldName": "file_name_m"	
+	}
   ],
   "outputFieldMappings": [],
   "cache": null,

@@ -1,0 +1,25 @@
+{
+  "name": "library-chunks-indexer",
+  "description": "Library chunks datastore",
+  "dataSourceName": "library-chunks-datasource",
+  "skillsetName": null,
+  "targetIndexName": "library-chunks-index",
+  "disabled": null,
+  "schedule": {
+    "interval": "P1D",
+    "startTime": "2023-11-16T18:46:12.433Z"
+  },
+  "parameters": {
+    "batchSize": null,
+    "maxFailedItems": -1,
+    "maxFailedItemsPerBatch": -1,
+    "configuration": {
+      "parsingMode": "json",
+      "indexedFileNameExtensions": ".json"
+    }
+  },
+  "fieldMappings": [],
+  "outputFieldMappings": [],
+  "cache": null,
+  "encryptionKey": null
+}
